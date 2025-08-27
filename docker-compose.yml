@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  doccano:
+    build: .
+    container_name: doccano-app
+    ports:
+      - "2386:2386"
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.production
+      - STANDALONE=1
+      - DATABASE_URL=sqlite:///db.sqlite3
+    volumes:
+      - ./media:/app/media
+      - ./db.sqlite3:/app/db.sqlite3
+    depends_on:
+      - redis
+    command: gunicorn --bind=0.0.0.0:2386 --workers=4 --timeout=300 --capture-output --log-level info config.wsgi
+
+  celery:
+    build: .
+    container_name: doccano-celery
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.production
+      - STANDALONE=1
+      - DATABASE_URL=sqlite:///db.sqlite3
+    volumes:
+      - ./media:/app/media
+      - ./db.sqlite3:/app/db.sqlite3
+    depends_on:
+      - redis
+    command: celery -A config.celery worker -l INFO -P solo -c 4 -n doccano-worker@%h -E
+
+  redis:
+    image: redis:7-alpine
+    container_name: doccano-redis
+    ports:
+      - "6379:6379"
