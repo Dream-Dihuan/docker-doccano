@@ -12,6 +12,13 @@ CORS_ALLOW_CREDENTIALS = True
 # 允许所有主机
 ALLOWED_HOSTS = ["*"]
 
+# 添加可信来源，解决CSRF问题
+CSRF_TRUSTED_ORIGINS = [
+    "https://prjlabel.scifn.co",
+    "http://localhost",
+    "http://127.0.0.1",
+]
+
 # 添加静态文件配置
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

@@ -7,6 +7,8 @@ WORKDIR /app
 ENV DJANGO_SETTINGS_MODULE=config.settings.production
 ENV STANDALONE=1
 ENV PYTHONUNBUFFERED=1
+ENV DJANGO_ALLOWED_HOSTS="*"
+ENV CSRF_TRUSTED_ORIGINS="https://prjlabel.scifn.co,http://localhost,http://127.0.0.1"
 
 # 安装系统依赖
 RUN apt-get update \

@@ -10,6 +10,8 @@ services:
       - DJANGO_SETTINGS_MODULE=config.settings.production
       - STANDALONE=1
       - DATABASE_URL=sqlite:///db.sqlite3
+      - DJANGO_ALLOWED_HOSTS=*
+      - CSRF_TRUSTED_ORIGINS=https://prjlabel.scifn.co,http://localhost,http://127.0.0.1
     volumes:
       - ./media:/app/media
       - ./db.sqlite3:/app/db.sqlite3
@@ -24,6 +26,8 @@ services:
       - DJANGO_SETTINGS_MODULE=config.settings.production
       - STANDALONE=1
       - DATABASE_URL=sqlite:///db.sqlite3
+      - DJANGO_ALLOWED_HOSTS=*
+      - CSRF_TRUSTED_ORIGINS=https://prjlabel.scifn.co,http://localhost,http://127.0.0.1
     volumes:
       - ./media:/app/media
       - ./db.sqlite3:/app/db.sqlite3
